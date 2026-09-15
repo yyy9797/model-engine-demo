@@ -1,0 +1,96 @@
+openapi: 3.0.3
+info:
+  title: Model Engine API
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/api
+paths:
+  /models:
+    get:
+      summary: list models
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Model'
+    post:
+      summary: create model
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModelCreate'
+      responses:
+        '200': { description: created }
+  /models/{id}/publish:
+    post:
+      summary: publish model
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        '200': { description: ok }
+  /models/{id}/records:
+    post:
+      summary: create record for model
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data: { type: object }
+                geom: { type: object }
+      responses:
+        '200': { description: ok }
+  /dictionaries/{code}/values/import:
+    post:
+      summary: bulk import dictionary values
+      parameters:
+        - in: path
+          name: code
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  value: { type: string }
+                  label: { type: string }
+                  parent: { type: string, nullable: true }
+      responses:
+        '200':
+          description: import report
+components:
+  schemas:
+    Model:
+      type: object
+      properties:
+        id: { type: string }
+        code: { type: string }
+        name: { type: string }
+        status: { type: string }
+        schema: { type: object }
+    ModelCreate:
+      type: object
+      required: [code,name]
+      properties:
+        code: { type: string }
+        name: { type: string }
+        schema: { type: object }

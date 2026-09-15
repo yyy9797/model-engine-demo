@@ -1,0 +1,22 @@
+{
+  "models": [
+    {
+      "id": "m-facility",
+      "name": "设施",
+      "code": "facility",
+      "status": "draft",
+      "schema": {
+        "fields": [
+          { "id": "f1", "name": "设施名称", "code": "name", "data_type": "string" },
+          { "id": "f2", "name": "设施类型", "code": "facility_type", "data_type": "enum", "dict_code": "facility_type" }
+        ]
+      }
+    }
+  ],
+  "dictionaries": [
+    { "id": "d1", "code": "facility_type", "name": "设施类型", "values": [{ "value": "airport", "label": "机场"},{ "value": "port", "label": "港口"} ] },
+    { "id": "d2", "code": "airport_subtype", "name": "机场子类", "values": [{ "value": "civil", "label": "民用机场"},{ "value": "military", "label": "军用机场"} ] }
+  ],
+  "records": [],
+  "approvals": []
+}
